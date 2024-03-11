@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "optasoccer"
+description = 'opta soccer data reader'
+readme = "README.md"
+requires-python = ">=3.7"
+license = "MIT"
+keywords = [
+  "football",
+  "soccer",
+  "opta",
+]
+authors = [
+  { name = "Andrew Rowlinson", email = "rowlinsonandy@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+dependencies = ['pandas']
+dynamic = ["version"]
+
+[project.urls]
+Issues = "https://github.com/andrewRowlinson/optasoccer/issues"
+Source = "https://github.com/andrewRowlinson/optasoccer"
+
+[tool.hatch.version]
+path = "optasoccer/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "pytest-cov",
+]
+[tool.hatch.envs.default.scripts]
+cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=temporary --cov=tests"
+no-cov = "cov --no-cov"
+
+[[tool.hatch.envs.test.matrix]]
+python = ["37", "38", "39", "310", "311"]
+
+[tool.hatch.build.targets.sdist]
+include = ["optasoccer/*.py"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["optasoccer"]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+omit = ["optasoccer/__about__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
